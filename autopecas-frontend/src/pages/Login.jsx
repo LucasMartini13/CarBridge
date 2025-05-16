@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import Layout from "../components/Layout";
+import "../estilo-css/Login.css"; // Importando o CSS para estilização
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -9,65 +9,83 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async () => {
+    if (!username || !password) {
+      setErro("Preencha todos os campos");
+      return;
+    }
+
+    setErro("");
+
     try {
       const res = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: new URLSearchParams({
-          username,
-          password,
-        }),
+        body: new URLSearchParams({ username, password }),
       });
 
       if (!res.ok) {
-        throw new Error("Usuário ou senha incorretos");
+        const data = await res.json();
+        throw new Error(data.detail || "Erro ao fazer login");
       }
 
       const data = await res.json();
       localStorage.setItem("token", data.access_token);
-      setErro("");
+
+      alert("Login realizado com sucesso!");
       navigate("/pedidos");
-    } catch (err) {
-      setErro(err.message);
+    } catch (error) {
+      setErro(error.message);
     }
   };
 
   return (
-    <Layout>
-      <main className="flex-grow flex flex-col justify-center items-center bg-gray-100">
-        <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md mt-12">
-          <h1 className="text-2xl font-bold mb-4 text-center">Login</h1>
+    <div className="login-container">
+      <div className="login-box">
+
+        {/* Formulário de Login */}
+        <div className="login-form">
+          <h1 className="login-title">Login</h1>
           <input
             type="text"
             placeholder="Usuário"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="border p-2 w-full mb-2 rounded"
+            className="input-field"
           />
           <input
             type="password"
             placeholder="Senha"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 w-full mb-2 rounded"
+            className="input-field"
           />
           <button
             onClick={handleLogin}
-            className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-8 py-3 rounded-lg shadow-md transition transform hover:scale-105 duration-300 w-full mt-2"
+            className="login-button"
           >
             Entrar
           </button>
-          {erro && <p className="text-red-500 mt-2">{erro}</p>}
-          <Link
-            to="/"
-            className="block mt-6 text-center text-blue-700 hover:underline font-semibold"
-          >
-            Voltar para Home
-          </Link>
+          {erro && <p className="error-text">{erro}</p>}
         </div>
-      </main>
-    </Layout>
+
+        {/* Sobreposição decorativa */}
+        <div className="login-overlay">
+          <h2 className="overlay-title">Bem-vindo!</h2>
+          <p className="overlay-text">Acesse sua conta para continuar</p>
+        </div>
+      </div>
+
+      {/* Link para voltar para a página inicial */}
+      <div className="volta-home">
+        <Link
+          to="/"
+          className="voltar-login-cadastro-link"
+        >
+          Voltar para Página Inicial
+        </Link>
+      </div>
+    </div>
   );
 }

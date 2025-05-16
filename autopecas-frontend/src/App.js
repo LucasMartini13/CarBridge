@@ -12,6 +12,7 @@ export default function App() {
         <Route path="/" element={<AutoPartsHome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/pedidos" element={<Pedidos />} />
       </Routes>
     </Router>
   );
