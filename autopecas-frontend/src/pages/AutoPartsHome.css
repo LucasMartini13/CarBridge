@@ -1,0 +1,57 @@
+/* sombra personalizada para cards */
+.card-produto {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  transition: box-shadow 0.3s;
+}
+.card-produto:hover {
+  box-shadow: 0 16px 32px rgba(0,0,0,0.16);
+  transform: scale(1.05);
+}
+
+/* animação para o botão principal */
+@keyframes pulse {
+  0% { transform: scale(1);}
+  50% { transform: scale(1.05);}
+  100% { transform: scale(1);}
+}
+.btn-destaque {
+  animation: pulse 2s infinite;
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s, background-color 0.3s;
+}
+.btn-destaque:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+/* cor de seleção de texto */
+::selection {
+  background: #2563eb;
+  color: #fff;
+}
+
+/* responsividade extra para o título */
+@media (max-width: 500px) {
+  .titulo-principal {
+    font-size: 2rem !important;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button:focus, a:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+footer {
+  border-top: 1px solid #e5e7eb;
+}
