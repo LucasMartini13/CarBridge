@@ -9,5 +9,6 @@ class TrackingOut(BaseModel):
     order_id: int
     status: str
 
-    class Config:
-        orm_mode = True
+class Config:
+    orm_mode = True
+    from_attributes = True

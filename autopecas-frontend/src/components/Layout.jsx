@@ -1,8 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import '../estilo-css/AutoPartsHome.css'; // Importando o CSS para estilização
+import { Link, useNavigate } from "react-router-dom";
+import '../estilo-css/AutoPartsHome.css';
 
 export default function Layout({ children }) {
+  const navigate = useNavigate();
+  const isLogged = !!localStorage.getItem("token");
+  const username = localStorage.getItem("username");
+  const userType = localStorage.getItem("userType");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    navigate("/");
+  };
+
   return (
     <div className="bg-site text-gray-800 font-sans min-h-screen flex flex-col">
       {/* Navbar */}
@@ -15,53 +26,82 @@ export default function Layout({ children }) {
         padding: "1rem 2rem",
         position: "relative"
       }}>
-        <div style={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+        <Link to="/" style={{ fontWeight: "bold", fontSize: "1.5rem", color: "white", textDecoration: "none" }}>
           CarBridge
-        </div>
+        </Link>
         <div style={{ display: "flex", gap: "1.5rem", fontSize: "1rem" }}>
           <Link to="/catalogo" style={{ color: "white", textDecoration: "none", cursor: "pointer" }}>PRODUTOS</Link>
           <Link to="/contato" style={{ color: "white", textDecoration: "none", cursor: "pointer" }}>CONTATO</Link>
+          <Link to="/rastreio" style={{ color: "white", textDecoration: "none", cursor: "pointer" }}>RASTREIO</Link>
+          {isLogged && userType === "admin" && (
+            <Link to="/estoque" style={{ color: "white", textDecoration: "none", cursor: "pointer" }}>ESTOQUE</Link>
+          )}
         </div>
         <div style={{ display: "flex", gap: "1rem" }}>
-          <Link to="/login" style={{
-            backgroundColor: "transparent",
-            border: "1.5px solid white",
-            color: "white",
-            padding: "0.5rem 1.25rem",
-            borderRadius: "0.5rem",
-            cursor: "pointer",
-            fontWeight: "600",
-            fontSize: "0.9rem",
-            transition: "background-color 0.3s ease",
-            textAlign: "center",
-            textDecoration: "none"
-          }}>
-            Login
-          </Link>
-          <Link to="/cadastro" style={{
-            backgroundColor: "white",
-            border: "none",
-            color: "#111827",
-            padding: "0.5rem 1.25rem",
-            borderRadius: "0.5rem",
-            cursor: "pointer",
-            fontWeight: "600",
-            fontSize: "0.9rem",
-            transition: "background-color 0.3s ease",
-            textAlign: "center",
-            textDecoration: "none"
-          }}>
-            Cadastro
-          </Link>
+          {isLogged && (
+            <span style={{ marginRight: "1rem", fontWeight: "bold" }}>
+              Olá, {username}
+            </span>
+          )}
+          {isLogged ? (
+            <button
+              onClick={handleLogout}
+              style={{
+                backgroundColor: "transparent",
+                border: "1.5px solid white",
+                color: "white",
+                padding: "0.5rem 1.25rem",
+                borderRadius: "0.5rem",
+                cursor: "pointer",
+                fontWeight: "600",
+                fontSize: "0.9rem",
+                transition: "background-color 0.3s ease",
+                textAlign: "center"
+              }}
+            >
+              Sair
+            </button>
+          ) : (
+            <>
+              <Link to="/login" style={{
+                backgroundColor: "transparent",
+                border: "1.5px solid white",
+                color: "white",
+                padding: "0.5rem 1.25rem",
+                borderRadius: "0.5rem",
+                cursor: "pointer",
+                fontWeight: "600",
+                fontSize: "0.9rem",
+                transition: "background-color 0.3s ease",
+                textAlign: "center",
+                textDecoration: "none"
+              }}>
+                Login
+              </Link>
+              <Link to="/cadastro" style={{
+                backgroundColor: "white",
+                border: "none",
+                color: "#111827",
+                padding: "0.5rem 1.25rem",
+                borderRadius: "0.5rem",
+                cursor: "pointer",
+                fontWeight: "600",
+                fontSize: "0.9rem",
+                transition: "background-color 0.3s ease",
+                textAlign: "center",
+                textDecoration: "none"
+              }}>
+                Cadastro
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
-      {/* Conteúdo da página */}
       <main className="flex-grow flex flex-col">
         {children}
       </main>
 
-      {/* Rodapé */}
       <footer className="bg-gray-100 px-8 py-16 text-center">
         <nav style={{
           backgroundColor: "#111827",
@@ -88,7 +128,6 @@ export default function Layout({ children }) {
             transition: "background-color 0.3s ease",
             textAlign: "center",
           }}>Fale Conosco</Link>
-
         </div>
         </nav>
       </footer>

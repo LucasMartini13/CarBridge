@@ -1,15 +1,26 @@
 from pydantic import BaseModel
+from typing import List
+from datetime import datetime
 
-class OrderCreate(BaseModel):
+class OrderItemOut(BaseModel):
     item_name: str
     quantity: int
+
+    class Config:
+        from_attributes = True
 
 class OrderOut(BaseModel):
     id: int
-    item_name: str
-    quantity: int
     status: str
-    user_id: int
+    created_at: datetime
+    itens: list[OrderItemOut]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class OrderItemCreate(BaseModel):
+    item_name: str
+    quantity: int
+
+class OrderCreate(BaseModel):
+    itens: List[OrderItemCreate]

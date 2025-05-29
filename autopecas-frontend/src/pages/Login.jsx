@@ -32,6 +32,7 @@ export default function Login() {
 
       const data = await res.json();
       localStorage.setItem("token", data.access_token);
+      localStorage.setItem("userType", data.user_type);
 
       navigate("/pedidos");
     } catch (error) {
