@@ -1,0 +1,118 @@
+/* Estilos gerais para a página de login */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../pages/img/login-cadastro-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.login-box {
+  display: flex;
+  width: 100%;
+  max-width: 900px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Formulário de Login */
+.login-form {
+  width: 100%;
+  max-width: 600px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.input-field {
+  border: 1px solid #ccc;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.login-button {
+  background-color: #111827;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #111827;
+}
+
+.error-text {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* Sobreposição decorativa */
+.login-overlay {
+  display: none;
+  background: linear-gradient(135deg, #111827, #111827);
+  color: white;
+  width: 100%;
+  max-width: 350px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.overlay-text {
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Mostrar sobreposição em telas médias ou maiores */
+@media (min-width: 768px) {
+  .login-overlay {
+    display: flex;
+  }
+}
+
+/* Link de voltar para página inicial */
+.volta-home {
+  position: absolute;
+  bottom: 20px; /* Fixa o link na parte inferior */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Link de voltar para cadastro */
+.volta-cadastro {
+  position: absolute;
+  bottom: 100px; /* Fixa o link na parte inferior */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
